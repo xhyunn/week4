@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>!!문장 슬롯머신!!</title>
+  <style>
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100vh;display:flex;flex-direction:column;gap:12px;align-items:center;justify-content:center;font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif;background: url("week4.png");background-size: cover;background-position: center;}
+
+    .machine{display:flex;gap:10px}
+    .slot{width:220px;height:100px;border:2px solid #222;border-radius:12px;display:flex;align-items:center;justify-content:center;padding:10px;text-align:center;font-size:18px;font-weight:700;background:#f0f4ff}
+    .controls{display:flex;gap:10px}
+    button{padding:8px 14px;border:none;border-radius:10px;cursor:pointer;font-weight:700}
+    #start{background:#0066ff;color:#fff}
+    #stop{background:#111;color:#fff}
+    #result{font-size:24px;opacity:.9; color:white}
+  </style>
+</head>
+<body>
+
+  <h1 style="margin:0; color:white">!!문장 슬롯머신!!</h1>
+
+  <div class="machine">
+    <div id="slot1" class="slot">마감일은</div>
+    <div id="slot2" class="slot">눈 밑 다크서클을</div>
+    <div id="slot3" class="slot">갉아먹는다</div>
+  </div>
+
+  <div class="controls">
+    <button id="start">Start</button>
+    <button id="stop">Stop</button>
+  </div>
+
+  <div id="result"></div>
+
+<script>
+   var subjects = ["마감일은","포토샵은","일러스트는","인쇄소는","프린터는","출력소 아저씨는","리소프린트는","기말과제는","팀플 PPT는","졸업전시는"];
+
+  var objects = ["새벽 세 시를", "지갑 속 잔액을", "눈 밑 다크서클을","USB 파일을", "종이 사이즈를", "잉크 카트리지를", "레이아웃 감각을", "팀원들의 톤앤매너를", "나의 자존심을", "리소프린트 색감을" ];
+
+  var verbs = [ "갉아먹는다", "뒤흔든다", "날려버린다", "삼켜버린다","뒤틀어버린다", "살려낸다", "벼랑 끝으로 민다", "구원한다", "밟아버린다","빛나게 한다"];
+
+  var s1 = document.getElementById("slot1");
+  var s2 = document.getElementById("slot2");
+  var s3 = document.getElementById("slot3");
+  var result = document.getElementById("result");
+  var i1 = 0, i2 = 0, i3 = 0;
+  var t1 = null, t2 = null, t3 = null;
+
+  function render(){ s1.innerHTML = subjects[i1 % subjects.length];s2.innerHTML = objects[i2 % objects.length]; s3.innerHTML = verbs[i3 % verbs.length];}
+
+  document.getElementById("start").onclick = function(){ 
+    if(t1 || t2 || t3) return; t1 = setInterval(function(){ i1++; render(); }, 70); t2 = setInterval(function(){ i2++; render(); }, 55); t3 = setInterval(function(){ i3++; render(); }, 85); result.innerHTML = "";};
+
+  document.getElementById("stop").onclick = function(){
+    if(t1){ clearInterval(t1); t1 = null; }
+    if(t2){ clearInterval(t2); t2 = null; }
+    if(t3){ clearInterval(t3); t3 = null; }
+    var line = s1.innerHTML + " " + s2.innerHTML + " " + s3.innerHTML + ".";
+    result.innerHTML = "👉 오늘의 문장: " + line;
+  };
+
+  render();
+</script>
+</body>
+</html>
